@@ -46,9 +46,3 @@ Compounded over 20 years at 12% CAGR: ₹1.4 crore difference.
 
 Python · FastAPI · SQLite · NumPy · SciPy · Chart.js · Yahoo Finance API
 
-## Run Locally
-
-git clone https://github.com/yourusername/thermodynamic-portfolio-os
-cd thermodynamic-portfolio-os
-python run.py
-# Open http://localhost:8000
