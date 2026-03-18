@@ -1,3 +1,5 @@
+url:https://thermodynamic-portfolio-os-production.up.railway.app/
+
 # Thermodynamic Portfolio OS
 
 A physics-based portfolio rebalancing engine for Indian equity markets.
