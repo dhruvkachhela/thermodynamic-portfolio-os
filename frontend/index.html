@@ -313,7 +313,10 @@ tr:hover td{background:rgba(56,114,224,0.04);}
 
 <script>
 // ─── GLOBALS ──────────────────────────────────────────────────────────────────
-const API = 'http://localhost:8000/api';
+// Auto-detect environment — works both locally and on Railway
+const API = window.location.hostname === 'localhost' 
+  ? 'http://localhost:8000/api'
+  : 'https://thermodynamic-portfolio-os-production.up.railway.app/api';
 const _charts = {};
 let currentClientId = null;
 let currentTab = 'overview';
@@ -433,7 +436,7 @@ async function updateUrgencyDots() {
 
 // ─── DASHBOARD ────────────────────────────────────────────────────────────────
 async function showDashboard() {
-  ['chart-current','chart-target','chart-pnl','chart-corr'].forEach(destroyChart);
+  ['chart-current','chart-target','chart-pnl','chart-corr','chart-alloc-overview','chart-drift-dist'].forEach(destroyChart);
   if (_planTimer) { clearInterval(_planTimer); _planTimer = null; }
   setActiveNav('dashboard');
   const main = document.getElementById('main-content');
@@ -550,6 +553,7 @@ async function showDashboard() {
         const CMAP = {equity:'#3872e0',bond:'#a78bfa',gold:'#f5c518',cash:'#4a5a7a'};
         const ac = document.getElementById('chart-alloc-overview');
         if (ac) {
+          destroyChart('chart-alloc-overview');
           _charts['chart-alloc-overview'] = new Chart(ac, {
             type:'doughnut',
             data:{labels:Object.keys(avgAlloc),datasets:[{data:Object.values(avgAlloc),backgroundColor:Object.keys(avgAlloc).map(k=>CMAP[k]||'#888'),borderWidth:0,hoverOffset:8}]},
@@ -558,6 +562,7 @@ async function showDashboard() {
         }
         const dc = document.getElementById('chart-drift-dist');
         if (dc) {
+          destroyChart('chart-drift-dist');
           _charts['chart-drift-dist'] = new Chart(dc, {
             type:'bar',
             data:{labels:clients.map(c=>c.client_name.split(' ')[0]),datasets:[{label:'Max Drift %',data:clients.map(c=>c.max_drift),backgroundColor:clients.map(c=>c.urgency_score>=70?'rgba(255,64,96,0.7)':c.urgency_score>=40?'rgba(245,197,24,0.7)':'rgba(0,229,160,0.7)'),borderRadius:4}]},
@@ -1359,7 +1364,7 @@ function confirmDelete(id, name) {
 }
 async function deleteClient(id, name) {
   try {
-    await fetch(`http://localhost:8000/api/client/${id}`,{method:'DELETE'});
+    await fetch(`${API.replace('/api','')}/api/client/${id}`,{method:'DELETE'});
     await loadSidebar();
     showDashboard();
     const toast = document.createElement('div');
