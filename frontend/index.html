@@ -314,9 +314,9 @@ tr:hover td{background:rgba(56,114,224,0.04);}
 <script>
 // ─── GLOBALS ──────────────────────────────────────────────────────────────────
 // Auto-detect environment — works both locally and on Railway
-const API = window.location.hostname === 'localhost' 
+const API = window.location.hostname === 'localhost'
   ? 'http://localhost:8000/api'
-  : 'https://thermodynamic-portfolio-os-production.up.railway.app/api';
+  : `${window.location.origin}/api`;
 const _charts = {};
 let currentClientId = null;
 let currentTab = 'overview';
