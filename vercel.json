@@ -1,0 +1,14 @@
+{
+  "builds": [
+    {
+      "src": "vercel_app.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "dest": "vercel_app.py"
+    }
+  ]
+}
