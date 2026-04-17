@@ -1,4 +1,4 @@
-url:https://thermodynamic-portfolio-os-production-ce23.up.railway.app/
+url:https://thermodynamic-portfolio-os.vercel.app/
 
 # Thermodynamic Portfolio OS
 
